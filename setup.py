@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyflet',
-    version='0.2.0',
+    version='0.2.1',
     packages=find_packages(include=['pyflet', 'pyflet.*']),
     install_requires=[
         'typer',
     ],
     entry_points={
         'console_scripts': [
-            'pyflet=pyflet.cli:app',
+            'pyflet=pyflet.main:app',
         ],
     },
     author='DevPythonMZ',
