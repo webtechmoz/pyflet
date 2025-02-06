@@ -20,7 +20,7 @@ pip install pyflet
 You can create a new Flet web project like this:
 
 ```bash
-pyflet create_flet_web <project_name>
+pyflet create-flet-web <project_name>
 ```
 
 This command creates a project with the required directories and files.
@@ -50,9 +50,9 @@ This will display support details and a link to the YouTube channel `DevPythonMZ
 ## Example Usage
 
 ```bash
-pyflet create_flet_web my_project
+pyflet create-flet-web my_project
 cd my_project
-pyflet init_project
+pyflet init-project
 ```
 
 This will create a new project and start the application automatically.
