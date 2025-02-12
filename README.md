@@ -1,64 +1,94 @@
-# PYFLET CLI
+# PyFlet CLI
 
-A simple command-line interface (CLI) tool for generating and managing web projects using Flet.
-
-## Features
-- Create new Flet web projects with a predefined structure.
-- Initialize and start Flet projects with optional configurations.
-- Get support and helpful resources.
+PyFlet CLI is a command-line interface tool designed to facilitate the creation and management of Flet web projects. It automates the setup process and provides essential commands for project initialization and user management.
 
 ## Installation
 
-To install the CLI via pip:
+To install PyFlet CLI, use the following command:
 
-```bash
+```sh
 pip install pyflet
 ```
 
-## Create a New Flet Web Project
+## Usage
 
-You can create a new Flet web project like this:
+Run the CLI using:
 
-```bash
+```sh
+pyflet [COMMAND] [OPTIONS]
+```
+
+### Commands
+
+#### 1. Create a Flet Web Project
+
+```sh
 pyflet create-flet-web <project_name>
 ```
 
-This command creates a project with the required directories and files.
+Creates a new Flet web project using a predefined template.
 
-## Initialize a Project
+#### 2. Initialize a Project
 
-You can initialize and start a project with the following command:
-
-```bash
-pyflet init_project [--reload] [--project_path <path>] [--platform <platform>]
+```sh
+pyflet init-project --reload <true/false> --project_path <path> --platform <web/android/ios>
 ```
 
-- `--reload`: (Optional) Starts the project with automatic reloading.
-- `--project_path`: (Optional) Defines the path of the project's main file (default: `main.py`).
-- `--platform`: (Optional) Specifies the target platform (`web` by default).
+- `--reload`: Automatically reload the project on changes (default: `true`).
+- `--project_path`: Path to the main Python file (default: `main.py`).
+- `--platform`: Target platform (default: `web`).
 
-## Support & Help
+#### 3. Create a Superuser
 
-If you need support or further information, run:
+```sh
+pyflet createsuperuser
+```
 
-```bash
+Prompts the user to enter credentials and creates a superuser in the database.
+
+#### 4. Get Support
+
+```sh
 pyflet support
 ```
 
-This will display support details and a link to the YouTube channel `DevPythonMZ`.
+Displays support information and the author's YouTube channel.
 
-## Example Usage
+## Configuration
 
-```bash
-pyflet create-flet-web my_project
-cd my_project
-pyflet init-project
+### Database Management
+
+This CLI interacts with SQLite databases using the `manage_sql` library. The superuser creation command inserts data into the `users` table.
+
+### Cloning Project Templates
+
+The CLI clones project templates from the repository:
+
+```
+https://github.com/webtechmoz/pyflet-models.git
 ```
 
-This will create a new project and start the application automatically.
+It copies template files to the new project directory while replacing placeholders.
+
+## Logging
+
+The CLI provides informative logs in different levels:
+
+- `info`: General information (blue)
+- `success`: Successful operations (green)
+- `warning`: Potential issues (yellow)
+- `error`: Errors encountered (red)
 
 ## Contributing
-Feel free to open issues or submit pull requests if you'd like to contribute.
+
+Feel free to contribute to this project by submitting issues or pull requests on GitHub.
 
 ## License
+
 This project is licensed under the MIT License.
+
+## Author
+
+Created by DevPythonMZ.
+
+📢 Subscribe to the YouTube channel: [@devpythonMZ](https://youtube.com/@devpythonMZ)

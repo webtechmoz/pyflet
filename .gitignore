@@ -1,3 +1,4 @@
 build/
 dist/
-pyflet.egg-info
+pyflet.egg-info/
+.gitignore

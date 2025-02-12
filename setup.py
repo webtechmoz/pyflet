@@ -2,10 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyflet',
-    version='0.2.1',
+    version='0.3.0',
     packages=find_packages(include=['pyflet', 'pyflet.*']),
     install_requires=[
         'typer',
+        'manage.sql'
     ],
     entry_points={
         'console_scripts': [

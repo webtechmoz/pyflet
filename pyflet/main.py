@@ -4,6 +4,7 @@ import subprocess
 from datetime import datetime
 from time import sleep
 import tempfile
+from manage_sql import SQLITE
 
 app = typer.Typer()
 
@@ -85,12 +86,83 @@ def init_project(reload: bool = True, project_path: str = 'main.py', platform: s
             level='error'
         )
 
+@app.command(name='createsuperuser', help='Create the superuser for your project')
+def creater_user():
+    username = verifiy_input(text='Please, enter the username')
+    email = verifiy_input(text='Please, enter the email')
+
+    while True:
+        password = verifiy_input(text='Please, enter the password')
+        confirm_password = verifiy_input(text='Please, enter again the password')
+
+        if password == confirm_password:
+            insert_user(
+                username=username,
+                email=email,
+                usertype='superuser',
+                status=True,
+                password=password
+            )
+            break
+        
+        else:
+            log_message(message='The password that you enter is different, enter again\n', level='warning')
+
+def insert_user(
+    username: str,
+    email: str,
+    usertype: str,
+    status: str,
+    password: str
+):
+    try:
+        db = SQLITE(database='database')
+        db.insert_data(
+            tablename='users',
+            insert_query=[
+                db.ColumnData(
+                    column='username',
+                    value=username
+                ),
+                db.ColumnData(
+                    column='email',
+                    value=email
+                ),
+                db.ColumnData(
+                    column='usertype',
+                    value=usertype
+                ),
+                db.ColumnData(
+                    column='password',
+                    value=db.encrypt_value(value=password)
+                ),
+                db.ColumnData(
+                    column='status',
+                    value=status
+                )
+            ]
+        )
+
+        log_message(message='User created sucessfull')
+    
+    except Exception as e:
+        log_message(message='We get error when we try to save on database', level='error')
+
 @app.command(name='support', help='For help & support, read the notes')
 def support():
     message = 'CLI created by DevPythonMZ\nSubscribe on your youtube channel with https://youtube.com/@devpythonMZ \nThank you'
     typer.echo(
         message=message
     )
+
+def verifiy_input(text: str = None):
+    while True:
+        input_user = input(f'{text}: ').strip()
+
+        if input_user:
+            return input_user
+        
+        log_message(message='Wrong enter, please enter again!', level='warning')
 
 def clone_project_model(parent_path: str):
     try:
