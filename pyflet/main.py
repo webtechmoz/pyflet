@@ -16,40 +16,34 @@ def create(project_name: str):
                 message=f'🔗 Clonando o projecto modelo {project_name}',
             )
             clone_project_model(parent_path=temp_path)
-            model_files = os.listdir(temp_path)
-
             log_message(
                 message=f'📂 Criado o diretorio do projeto {project_name}',
             )
             project_path = create_path(child_path=project_name)
 
-            for model_file in model_files:
-                if os.path.isdir(os.path.join(temp_path, model_file)):
+            for root, dirs, files in os.walk(temp_path):
+                dirs[:] = [d for d in dirs if d != ".git"]
 
-                    sub_path = os.path.join(temp_path, model_file)
+                # Criar a estrutura de diretórios
+                relative_path = os.path.relpath(root, temp_path)
+                new_dir_path = os.path.join(project_path, relative_path)
 
-                    if '.git' not in model_file:
-                        log_message(
-                            message=f'📂 Criando o directorio {model_file}',
-                        )
-                        new_path = create_path(child_path=model_file, parent_path=project_path)
-
-                        for sub_file in os.listdir(sub_path):
-                            create_file(
-                                file=sub_file,
-                                old_path=sub_path,
-                                new_path=new_path,
-                                project_name=project_name
-                            )
-                
-                else:
-                    create_file(
-                        file=model_file,
-                        old_path=temp_path,
-                        new_path=project_path,
-                        project_name=project_name
+                if not os.path.exists(new_dir_path):
+                    log_message(
+                        message=f'📂 Criando diretório {relative_path}'
                     )
-            
+                    os.makedirs(new_dir_path, exist_ok=True)
+
+                # Copiar os arquivos
+                for file in files:
+                    if file != '.gitignore':
+                        create_file(
+                            file=file,
+                            old_path=root,
+                            new_path=new_dir_path,
+                            project_name=project_name
+                        )
+
             log_message(
                 message=f'✅ Projecto {project_name} criado com sucesso',
                 level='sucess'
