@@ -33,16 +33,24 @@ def create(project_name: str):
                         message=f'📂 Criando diretório {relative_path}'
                     )
                     os.makedirs(new_dir_path, exist_ok=True)
+                
+                for directory in dirs:
+                    sub_dir_path = os.path.join(new_dir_path, directory)
+                    if not os.path.exists(sub_dir_path):
+                        log_message(message=f'📂 Criando subdiretório {sub_dir_path}')
+                        os.makedirs(sub_dir_path, exist_ok=True)
 
                 # Copiar os arquivos
                 for file in files:
-                    if file != '.gitignore':
-                        create_file(
-                            file=file,
-                            old_path=root,
-                            new_path=new_dir_path,
-                            project_name=project_name
-                        )
+                    file_path = os.path.join(root, file)
+                    if os.path.isfile(file_path):
+                        if file != '.gitignore':
+                            create_file(
+                                file=file,
+                                old_path=root,
+                                new_path=new_dir_path,
+                                project_name=project_name
+                            )
 
             log_message(
                 message=f'✅ Projecto {project_name} criado com sucesso',
